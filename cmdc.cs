@@ -2,29 +2,23 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.IO;
-using System.Text.RegularExpressions;
 
 
 class Program
 {
     static int Main(string[] args)
     {
-        string commandLine = Helper.SeparateExecPath(Environment.CommandLine).Item2;
-        
-        string myName = System.Reflection.Assembly.GetExecutingAssembly().Location;
-        myName = myName.Substring(0, myName.Length - 3) + 't' + myName[myName.Length - 2] + 't';
+        int index = 1;
+        string varName;
+        while (true)
+        {
+            varName = "VAR" + index;
+            if (Environment.GetEnvironmentVariable(varName) == null) break;
+            index++;
+        }
+        Environment.SetEnvironmentVariable(varName,"%");
 
-        string[] split_cmd = File.ReadAllText(myName, Encoding.UTF8).Split(new[] { "\r\n", "\r", "\n" }, 2, StringSplitOptions.None);
-        string newCommand = Regex.Replace(split_cmd[1], Regex.Escape(split_cmd[0])+"(.)", new MatchEvaluator(match => {
-            switch (match.Groups[1].Value)
-            {
-                case "a": return commandLine.Replace("&", "&&");
-                case "b": return commandLine.Replace("|", "||");
-                case "c": return commandLine;
-                case "d": return System.IO.Path.GetDirectoryName(myName);
-                default: throw new System.ComponentModel.Win32Exception("illegal character after prefix:"+match.Groups[1].Value);
-            }
-        }));
+        string commandLine = "cmd /c \"set "+varName+"=&"+Helper.SeparateExecPath(Environment.CommandLine).Item2.Replace("%","%"+varName+"%")+"\"";
 
         // Prepare the STARTUPINFO structure
         Helper.STARTUPINFO si = new Helper.STARTUPINFO();
@@ -36,7 +30,7 @@ class Program
         
         Helper.PROCESS_INFORMATION pi;
 
-        if (!Helper.CreateProcess(null, newCommand, IntPtr.Zero, IntPtr.Zero, true, 0x00000200, // CREATE_NEW_PROCESS_GROUP
+        if (!Helper.CreateProcess(null, commandLine, IntPtr.Zero, IntPtr.Zero, true, 0x00000200, // CREATE_NEW_PROCESS_GROUP
                                     IntPtr.Zero, null, ref si, out pi)){
             throw new System.ComponentModel.Win32Exception();
         }

@@ -13,6 +13,7 @@ set CSC_EXE=C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe
 %CSC_EXE% -t:winexe _helper.cs -win32icon:iconex-G.ico runotherex-gui.cs
 
 %CSC_EXE% _helper.cs _handler.cs andrun.cs
+%CSC_EXE% _helper.cs _handler.cs cmdc.cs
 %CSC_EXE% _helper.cs _handler.cs evalrun.cs
 %CSC_EXE% _helper.cs _handler.cs waitrun.cs
 %CSC_EXE% _helper.cs _handler.cs errlogrun.cs
