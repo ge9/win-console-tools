@@ -57,7 +57,7 @@ class Program
                 pipeIn = readPipe;
                 pipeOut = writePipe;
             }
-            processHandles.Add(Helper.ExecuteCommand(commands[i], prevPipe, pipeOut));
+            processHandles.Add(Helper.SimpleExecuteCommand(commands[i], prevPipe, pipeOut));
 
             if (i > 0) Helper.CloseHandle(prevPipe);
             if (i < commands.Count - 1) Helper.CloseHandle(pipeOut);

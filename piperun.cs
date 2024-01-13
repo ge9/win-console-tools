@@ -41,10 +41,10 @@ class Program
 
             IntPtr readPipe, writePipe;
             Helper.CreatePipe(out readPipe, out writePipe, ref sa, 0);
-            processHandles[0] = Helper.ExecuteCommand(commands.Item1, Helper.GetStdHandle(Helper.STD_INPUT_HANDLE), writePipe);
+            processHandles[0] = Helper.SimpleExecuteCommand(commands.Item1, Helper.GetStdHandle(Helper.STD_INPUT_HANDLE), writePipe);
             Helper.CloseHandle(writePipe);
 
-            processHandles[1] = Helper.ExecuteCommand(commands.Item2, readPipe, Helper.GetStdHandle(Helper.STD_OUTPUT_HANDLE));
+            processHandles[1] = Helper.SimpleExecuteCommand(commands.Item2, readPipe, Helper.GetStdHandle(Helper.STD_OUTPUT_HANDLE));
             Helper.CloseHandle(readPipe);
         }
         // Wait for all processes to finish

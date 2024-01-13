@@ -20,6 +20,8 @@ Executes the given commandline and wait a key press
 # andrun
 Executes the given two commandlines in order. "&" in first_command should be escaped as "&&".
 - usage: `andrun first_command & second_command``
+# looprun
+Executes the given command repeatedly
 # piperun
 Executes the given two commandlines with a pipe. "|" in first_command should be escaped as "||".  
 - usage: `piperun first_command | second_command``

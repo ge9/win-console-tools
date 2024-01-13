@@ -155,7 +155,8 @@ class Helper
 
         return Tuple.Create(e, s.TrimStart(new[] { ' ', '\t' }));
     }
-    public static IntPtr ExecuteCommand(string command, IntPtr inputPipe, IntPtr outputPipe)
+    //handlerなどを設定しないシンプルな実行。結局piperun系でしか使われていない。
+    public static IntPtr SimpleExecuteCommand(string command, IntPtr inputPipe, IntPtr outputPipe)
     {
         var siStartInfo = new Helper.STARTUPINFO();
         var piProcInfo = new Helper.PROCESS_INFORMATION();
@@ -171,5 +172,56 @@ class Helper
         }
         Helper.CloseHandle(piProcInfo.hThread);
         return piProcInfo.hProcess;
+    }
+    //handlerを使用し、標準入出力を使用して実行する。
+    public static int StdExecuteCommand(string commandLine){
+        // Prepare the STARTUPINFO structure
+        Helper.STARTUPINFO si = new Helper.STARTUPINFO();
+        si.cb = Marshal.SizeOf(si);
+        si.dwFlags = 0x00000100; // STARTF_USESTDHANDLES
+        si.hStdInput = Helper.GetStdHandle(Helper.STD_INPUT_HANDLE);
+        si.hStdOutput = Helper.GetStdHandle(Helper.STD_OUTPUT_HANDLE);
+        si.hStdError = Helper.GetStdHandle(Helper.STD_ERROR_HANDLE);
+        
+        Helper.PROCESS_INFORMATION pi;
+
+        if (!Helper.CreateProcess(null, commandLine, IntPtr.Zero, IntPtr.Zero, true, 0x00000200, // CREATE_NEW_PROCESS_GROUP
+                                    IntPtr.Zero, null, ref si, out pi)){
+            throw new System.ComponentModel.Win32Exception();
+        }
+
+        Helper.SetConsoleCtrlHandler(new Helper.ConsoleCtrlDelegate(new Handler((uint)pi.dwProcessId).HandlerRoutine), true);
+        uint r = Helper.WaitForSingleObject(pi.hProcess, uint.MaxValue); // INFINITE
+        if (r != 0) {// WAIT_OBJECT_0
+            Console.WriteLine("Wait failed; exit code {0}", r); return -1;
+        }
+        
+        uint exitCode;
+        // Get the exit code
+        if (!Helper.GetExitCodeProcess(pi.hProcess, out exitCode)){
+            Console.WriteLine("GetExitCodeProcess failed"); return -1;
+        }
+        // Close the handles
+        Helper.CloseHandle(pi.hProcess);
+        Helper.CloseHandle(pi.hThread);
+
+        return (int)exitCode;
+    }
+}
+
+class Handler
+{
+    private uint pipid;
+    public Handler(uint pipid) {
+        this.pipid = pipid;
+    }
+    public bool HandlerRoutine(uint dwCtrlType)
+    {
+        if (dwCtrlType == 0)
+        {
+            Helper.GenerateConsoleCtrlEvent(1, pipid);
+            return true;
+        }
+        return false;
     }
 }
