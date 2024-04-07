@@ -2,12 +2,15 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-class Program
+public class Program
 {
     static void Main(string[] args)
     {
-        string commandLine0 = Helper.SeparateExecPath(Environment.CommandLine).Item2;
-        Tuple<string, string> commandLine1 = Helper.SeparateExecPath(commandLine0);
+        adminrun(Helper.SeparateExecPath(Environment.CommandLine).Item2);
+    }
+    public static void adminrun(string commandLine)
+    {
+        Tuple<string, string> commandLine1 = Helper.SeparateExecPath(commandLine);
         string file = commandLine1.Item1;
         string parameters = commandLine1.Item2;
 

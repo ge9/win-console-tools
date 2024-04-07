@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
-class Program
+public class Program
 {
     static Tuple<string, string> SplitCommands(string input)
     {
@@ -32,7 +32,11 @@ class Program
     }
     static void Main(string[] args)
     {
-        var commands = SplitCommands(Helper.SeparateExecPath(Environment.CommandLine).Item2);
+        piperun(Helper.SeparateExecPath(Environment.CommandLine).Item2);
+    }
+    public static void piperun(string commandLine)
+    {
+        var commands = SplitCommands(commandLine);
         IntPtr[] processHandles = new IntPtr[2];
         {
             Helper.SECURITY_ATTRIBUTES sa = new Helper.SECURITY_ATTRIBUTES();

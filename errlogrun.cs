@@ -3,11 +3,14 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.IO;
 
-class Program
+public class Program
 {
     static int Main(string[] args)
     {
-        string commandLine0 = Helper.SeparateExecPath(Environment.CommandLine).Item2;
+        return errlogrun(Helper.SeparateExecPath(Environment.CommandLine).Item2);
+    }
+    public static int errlogrun(string commandLine0)
+    {
         Tuple<string, string> cmd_temp = Helper.SeparateExecPath(commandLine0);
         string commandLine = cmd_temp.Item2;
         string logFile = cmd_temp.Item1.Trim('"');

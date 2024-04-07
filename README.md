@@ -1,7 +1,10 @@
 # printcd
 print the current directory
 # pecho
-print the command line argument as it is
+DEPRECATED: doesn't work correctly with Unicode characters
+print the command line argument as it is (pure-echo)
+# wenv
+works like `env` command. Variable name should not contain whitespaces. If value contains whitespaces, enclose it in `" "`. `"` can be escaped by `""`.
 # startrun
 Executes the given commandline with new console window (use default terminal emulator).
 # hiderun
@@ -15,6 +18,8 @@ Executes the given commandline as an argument to `cmd /c`, with "%" correctly es
 # errlogrun
 Executes the given commandline, redirecting the stderr to the given file
 - Usage: errlogrun stderr.txt [commandline]
+# fliprun
+Executes the given commandline, flipping stdout and stderr.
 # waitrun
 Executes the given commandline and wait a key press
 # andrun
@@ -31,6 +36,7 @@ like piperun but can execute any number of commandlines. "|" in all commandlines
 # evalrun
 Gets the output of the given commandline and executes it as a commandline.
 # hererun
+(not useful. use runotherex instead)
 Executes the commandline, replacing the specified string with the executable's directory. The executable has an icon because it may be renamed to use.
 - Usage: `hererun // cmd "//\..\script.bat"`
 # "runother" family
@@ -42,7 +48,13 @@ The first line of the companion file is recognized as "prefix" (here we assume i
 - prefix+`c` (here `$$c`)...the passed argument
 - prefix+`a` (here `$$a`)...the passed argument, with "&" replaced by "&&" (for andrun)
 - prefix+`b` (here `$$b`)...the passed argument, with "|" replaced by "||" (for piperun)
+- prefix+`p` (here `$$p`)...the passed argument, with "'" replaced by "''" (for powershell) (also replaces `‘` `’` `‚` `‛`)
 - prefix+`d` (here `$$d`)...the directory containing the executable
+# loader.ps1
+loads .cs file and run. see the file for usage.
 # Note
 the following commands quit without waiting for the given commandline to terminate.
 - startrun, adminrun, uacrun, hiderun
+
+the following commands cannot be run through `loader.ps1` because they are fetching the path of the directory where *the executable file* is placed (`System.Reflection.Assembly.GetExecutingAssembly()`).
+- runother*, hererun

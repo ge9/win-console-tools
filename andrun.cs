@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
-class Program
+public class Program
 {
     static Tuple<string, string> SplitCommands(string input)
     {
@@ -32,7 +32,11 @@ class Program
     }
     static int Main(string[] args)
     {
-        var commands = SplitCommands(Helper.SeparateExecPath(Environment.CommandLine).Item2);
+        return andrun(Helper.SeparateExecPath(Environment.CommandLine).Item2);
+    }
+    public static int andrun(string commandLine)
+    {
+        var commands = SplitCommands(commandLine);
         Helper.StdExecuteCommand(commands.Item1);
         return Helper.StdExecuteCommand(commands.Item2);
     }

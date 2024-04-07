@@ -3,10 +3,13 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.IO;
 
-
-class Program
+public class Program
 {
     static int Main(string[] args)
+    {
+        return cmdc(Helper.SeparateExecPath(Environment.CommandLine).Item2);
+    }
+    public static int cmdc(string commandLine0)
     {
         int index = 1;
         string varName;
@@ -18,7 +21,7 @@ class Program
         }
         Environment.SetEnvironmentVariable(varName,"%");
 
-        string commandLine = "cmd /c \"set "+varName+"=&"+Helper.SeparateExecPath(Environment.CommandLine).Item2.Replace("%","%"+varName+"%")+"\"";
+        string commandLine = "cmd /c \"set "+varName+"=&"+commandLine0.Replace("%","%"+varName+"%")+"\"";
 
         return Helper.StdExecuteCommand(commandLine);
     }

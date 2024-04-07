@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
-class Program
+public class Program
 {
     static List<string> SplitCommands(string input)
     {
@@ -35,10 +35,12 @@ class Program
         }
         return commands;
     }
-    
-    static void Main(string[] args)
+    static void Main(string[] args){
+        piperunex(Helper.SeparateExecPath(Environment.CommandLine).Item2);
+    }
+    public static void piperunex(string commandLine)
     {
-        var commands = SplitCommands(Helper.SeparateExecPath(Environment.CommandLine).Item2);
+        var commands = SplitCommands(commandLine);
         List<IntPtr> processHandles = new List<IntPtr>();
         Helper.SECURITY_ATTRIBUTES sa = new Helper.SECURITY_ATTRIBUTES();
             sa.nLength = Marshal.SizeOf(sa);

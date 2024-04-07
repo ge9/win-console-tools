@@ -4,14 +4,16 @@ using System.Text;
 
 
 
-class Program
+public class Program
 {
     static int Main(string[] args)
     {
+        return evalrun(Helper.SeparateExecPath(Environment.CommandLine).Item2);
+    }
+    public static int evalrun(string commandLine)
+    {
         string outstr;
-        
         {
-            string commandLine = Helper.SeparateExecPath(Environment.CommandLine).Item2;
             Helper.SECURITY_ATTRIBUTES sa = new Helper.SECURITY_ATTRIBUTES();
             sa.nLength = Marshal.SizeOf(sa);
             sa.bInheritHandle = 1;

@@ -1,9 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
 
-class Helper
+public class Helper
 {
-    
     public static readonly int STD_INPUT_HANDLE = -10;
     public static readonly int STD_OUTPUT_HANDLE = -11;
     public static readonly int STD_ERROR_HANDLE = -12;
@@ -106,6 +105,8 @@ class Helper
     [DllImport("kernel32.dll")]
     public static extern bool WaitForMultipleObjects(uint nCount, IntPtr[] lpHandles,
        bool bWaitAll, uint dwMilliseconds);
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+    public static extern int MessageBoxW(IntPtr hWnd, string text, string caption, uint type);
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct SHELLEXECUTEINFO

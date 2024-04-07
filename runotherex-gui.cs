@@ -21,6 +21,7 @@ class Program
                 case "a": return commandLine.Replace("&", "&&");
                 case "b": return commandLine.Replace("|", "||");
                 case "c": return commandLine;
+                case "p": return commandLine.Replace("'", "''").Replace("‘", "‘‘").Replace("’", "’’").Replace("‚", "‚‚").Replace("‛", "‛‛");
                 case "d": return System.IO.Path.GetDirectoryName(myName);
                 default: throw new System.ComponentModel.Win32Exception("illegal character after prefix:"+match.Groups[1].Value);
             }
