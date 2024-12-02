@@ -36,7 +36,6 @@ like piperun but can execute any number of commandlines. "|" in all commandlines
 # evalrun
 Gets the output of the given commandline and executes it as a commandline.
 # hererun
-(not useful. use runotherex instead)
 Executes the commandline, replacing the specified string with the executable's directory. The executable has an icon because it may be renamed to use.
 - Usage: `hererun // cmd "//\..\script.bat"`
 # "runother" family
@@ -50,6 +49,7 @@ The first line of the companion file is recognized as "prefix" (here we assume i
 - prefix+`b` (here `$$b`)...the passed argument, with "|" replaced by "||" (for piperun)
 - prefix+`p` (here `$$p`)...the passed argument, with "'" replaced by "''" (for powershell) (also replaces `‘` `’` `‚` `‛`)
 - prefix+`d` (here `$$d`)...the directory containing the executable
+- prefix+`6` (here `$$6`)...base64-encoded argument
 # loader.ps1
 loads .cs file and run. see the file for usage.
 # Note

@@ -218,7 +218,7 @@ class Handler
     }
     public bool HandlerRoutine(uint dwCtrlType)
     {
-        if (dwCtrlType == 0)
+        if (dwCtrlType == 0 || dwCtrlType == 1)
         {
             Helper.GenerateConsoleCtrlEvent(1, pipid);
             return true;
