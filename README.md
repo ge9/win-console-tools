@@ -51,10 +51,10 @@ The first line of the companion file is recognized as "prefix" (here we assume i
 - prefix+`d` (here `$$d`)...the directory containing the executable
 - prefix+`6` (here `$$6`)...base64-encoded argument
 # loader.ps1
-loads .cs file and run. see the file for usage.
+An alternative PowerShell script that loads a .cs file and behaves like compiled *.exe files. See the file for usage. Since it takes one base64-encoded string as an argument, it's supposed to be used with the "\*6" prefix of runother\*.  Normally, compiled *.exe files are faster.
 # Note
-the following commands quit without waiting for the given commandline to terminate.
+The following commands quit without waiting for the given commandline to terminate.
 - startrun, adminrun, uacrun, hiderun
 
-the following commands cannot be run through `loader.ps1` because they are fetching the path of the directory where *the executable file* is placed (`System.Reflection.Assembly.GetExecutingAssembly()`).
-- runother*, hererun
+The following commands cannot be run through `loader.ps1` because they are fetching the path of the directory where *the executable file* is placed (`System.Reflection.Assembly.GetExecutingAssembly()`).
+- runother\*, hererun
