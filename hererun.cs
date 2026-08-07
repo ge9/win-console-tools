@@ -15,7 +15,7 @@ public class Program
         
         string commandLine = command_tmp.Item2.Replace(command_tmp.Item1, System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
 
-        return Helper.StdExecuteCommand(commandLine);
+        return Executor.StdExecuteCommand(commandLine);
     }
     
 }

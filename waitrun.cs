@@ -11,7 +11,7 @@ public class Program
     }
     public static int waitrun(string commandLine)
     {
-        int exitCode = Helper.StdExecuteCommand(commandLine);
+        int exitCode = Executor.StdExecuteCommand(commandLine);
         
         Console.WriteLine("waitrun: press some key to exit...");
 	    Console.ReadKey();

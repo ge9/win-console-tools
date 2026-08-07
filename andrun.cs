@@ -37,7 +37,7 @@ public class Program
     public static int andrun(string commandLine)
     {
         var commands = SplitCommands(commandLine);
-        Helper.StdExecuteCommand(commands.Item1);
-        return Helper.StdExecuteCommand(commands.Item2);
+        Executor.StdExecuteCommand(commands.Item1);
+        return Executor.StdExecuteCommand(commands.Item2);
     }
 }

@@ -23,7 +23,7 @@ public class Program
 
         string commandLine = "cmd /c \"set "+varName+"=&"+commandLine0.Replace("%","%"+varName+"%")+"\"";
 
-        return Helper.StdExecuteCommand(commandLine);
+        return Executor.StdExecuteCommand(commandLine);
     }
     
 }

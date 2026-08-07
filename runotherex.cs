@@ -8,7 +8,7 @@ class Program
 {
     static int Main(string[] args)
     {
-        return Helper.StdExecuteCommand(Runotherex.getNewCmd());
+        return Executor.StdExecuteCommand(Runotherex.getNewCmd());
     }
     
 }

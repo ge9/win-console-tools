@@ -15,7 +15,7 @@ class Program
 
         string newCommand = File.ReadAllText(myName, Encoding.UTF8) + commandLine;
 
-        return Helper.StdExecuteCommand(newCommand);
+        return Executor.StdExecuteCommand(newCommand);
     }
     
 }

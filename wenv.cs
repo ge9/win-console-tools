@@ -49,6 +49,6 @@ public class Program
     public static int wenv(string commandLine)
     {
         var commands = SplitCommandsWithEnvChanged(commandLine);
-        return Helper.StdExecuteCommand(commands);
+        return Executor.StdExecuteCommand(commands);
     }
 }
